@@ -185,6 +185,16 @@ const playerNumbers = (teamName) => {
     return jerseyNumbers;
 };
 
+function playerStats(playerName) {
+    const game = gameObject();
+    for (let team in game) {
+        const players = game[team].plyaers;
+        if (players[playerName]) {
+            return players[playerName];
+        }
+    }
+}
+
 const bigShoeRebounds = () => {
     let object = gameObject();
     let shoeSize = 0;
@@ -213,3 +223,80 @@ const bigShoeRebounds = () => {
         [playerName]: playerWithLargestShowSize,
     };
 };
+ 
+// Bonus functions:
+  
+// Function to find the player with the most points
+
+function mostPointsScored() {
+    const game = gameObject();
+    let maxPoints = 0;
+    let topPlayer = "";
+
+    for (let team in game) {
+        const players = game[team].players;
+        for (let player in players) {
+            if (players[player].points > maxPoints) {
+                maxPoints = players[player].points;
+                topPlayer = player;
+            }
+        }
+    }
+    return topPlayer;
+}
+
+// Function to find the team with the most points
+
+function winningTeam() {
+    const game = gameObject();
+    let homePoints = 0;
+    let awayPoints = 0;
+
+    for (let player in game.home.players) {
+        homePoints += game.home.players[player].points;
+    }
+
+    for (let player in game.away.players) {
+        awayPoints += game.away.players[player].points;
+    }
+
+    return homePoints > awayPoints ? game.home.teamName : game.away.teamName;
+}
+
+// Function to find the player with the longest name
+
+function playerWithLongestName() {
+    const game = gameObject();
+    let longestName = "";
+
+    for (let team in game) {
+        const players = game[team].players;
+        for (let player in players) {
+            if (player.length > longestName.length) {
+                longestName = player;
+            }
+        }
+    }
+    return longestName;
+}
+// Super Bonus:
+  
+// Function to check if the player with the longest name also has the most steals
+
+function doesLongNameStealAton() {
+    const game = gameObject();
+    const longestName = playerWithLongestName();
+    let maxSteals = 0;
+    let playerWithMostSteals = "";
+
+    for (let team in game) {
+        const players = game[team].players;
+        for (let player in players) {
+            if (player[player].steas > maxSteals) {
+                maxSteals = players[player].steals;
+                playerWithMostSteals = player;
+            }
+        }
+    }
+    return longestName === playerWithMostSteals;
+}
